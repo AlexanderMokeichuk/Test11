@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Product} from "../../type";
+import {Product, ProductApi} from "../../type";
 import {RootState} from "../../app/store";
 import axiosApi from "../../axiosApi";
 
@@ -27,6 +27,32 @@ export const postProduct = createAsyncThunk<void, Product, { state: RootState }>
       });
     } catch (e) {
       console.log(e);
+    }
+  },
+);
+
+export const fetchProducts = createAsyncThunk<ProductApi[], undefined>(
+  "products/fetchProducts",
+  async () => {
+    try {
+      const {data: response} = await axiosApi.get("/products");
+      return response;
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  },
+);
+
+export const fetchProductsById = createAsyncThunk<ProductApi[], string>(
+  "products/fetchProductsById",
+  async (id) => {
+    try {
+      const {data: response} = await axiosApi.get(`/products/${id}`);
+      return response;
+    } catch (e) {
+      console.log(e);
+      return [];
     }
   },
 );

@@ -14,7 +14,7 @@ productsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, ne
     const postProduct: ProductFront = {
       title: req.body.title,
       description: req.body.description,
-      price: req.body.price,
+      price: parseInt(req.body.price),
       image: req.file ? req.file.filename : null,
       user: user._id,
       category: req.body.category,
@@ -34,7 +34,18 @@ productsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, ne
 
 productsRouter.get('/', async (_req, res, next) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().select('title price image');
+
+    return res.send(products);
+  } catch (e) {
+    next();
+  }
+});
+
+productsRouter.get('/:id', async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const products = await Product.find({ category: id }).select('title price image');
 
     return res.send(products);
   } catch (e) {

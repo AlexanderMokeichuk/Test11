@@ -1,7 +1,7 @@
 import {ProductApi} from "../../type";
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../../app/store";
-import {postProduct} from "./productsThunks";
+import {fetchProducts, fetchProductsById, postProduct} from "./productsThunks";
 
 interface ProductsSlice {
   products: ProductApi[],
@@ -26,6 +26,27 @@ const productsSlice = createSlice({
       state.btnLauding = false;
     }).addCase(postProduct.rejected, (state) => {
       state.btnLauding = false;
+    });
+
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.productsLauding = true;
+    }).addCase(fetchProducts.fulfilled, (state, {payload: products}: PayloadAction<ProductApi[]>) => {
+      state.products = products;
+      state.productsLauding = false;
+    }).addCase(fetchProducts.rejected, (state) => {
+      state.productsLauding = false;
+    });
+
+    builder.addCase(fetchProductsById.pending, (state) => {
+      state.productsLauding = true;
+      state.btnLauding = true;
+    }).addCase(fetchProductsById.fulfilled, (state, {payload: products}: PayloadAction<ProductApi[]>) => {
+      state.products = products;
+      state.productsLauding = false;
+      state.btnLauding = false;
+    }).addCase(fetchProductsById.rejected, (state) => {
+      state.productsLauding = false;
+      state.btnLauding = true;
     });
   }
 });

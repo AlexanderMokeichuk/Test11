@@ -11,12 +11,11 @@ const ProductSchema = new Schema<ProductFront>({
     required: true,
   },
   price: {
-    type: String,
+    type: Number,
     required: true,
   },
   image: {
     type: String || null,
-    required: true,
   },
   user: {
     type: Schema.Types.ObjectId,

@@ -58,6 +58,6 @@ export interface Product extends ProductFrom {
 export interface ProductApi {
   _id: string,
   title: string,
-  price: string,
+  price: number,
   image: string | null,
 }

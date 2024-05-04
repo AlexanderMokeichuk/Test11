@@ -14,7 +14,7 @@ export interface UserApi extends UserFront {
 
 export interface ProductFront {
   title: string,
-  price: string,
+  price: number,
   description: string,
   image: string | null,
   user: Types.ObjectId,

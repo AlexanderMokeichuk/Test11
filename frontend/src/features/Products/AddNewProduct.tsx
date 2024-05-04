@@ -13,6 +13,7 @@ import {selectCategories} from "../Categories/categoriesSlice";
 import {fetchCategories} from "../Categories/categoriesThunks";
 import {selectUser} from "../Users/usersSlice";
 import {postProduct} from "./productsThunks";
+import {selectBtnLauding} from "./productsSlice";
 
 const defaultState: ProductFrom = {
   title: "",
@@ -27,6 +28,7 @@ const AddNewProduct: React.FC = () => {
   const [formState, setFormState] = useState<ProductFrom>(defaultState);
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
+  const btnLauding = useAppSelector(selectBtnLauding);
   const user = useAppSelector(selectUser);
 
 
@@ -161,6 +163,7 @@ const AddNewProduct: React.FC = () => {
             variant="contained"
             aria-label="Basic button group"
             type={"submit"}
+            disabled={btnLauding}
             sx={{
               display: "flex",
               marginTop: 2,
