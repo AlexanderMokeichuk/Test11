@@ -6,14 +6,14 @@ import {
   LoginMutation,
   RegisterMutation,
   RegisterResponse,
-  User,
+  UserApi,
   ValidationError,
 } from '../../type';
 import { unsetUser } from './usersSlice';
 import { RootState } from '../../app/store';
 
 export const registration = createAsyncThunk<
-  User,
+  UserApi,
   RegisterMutation,
   { rejectValue: ValidationError }
 >('users/registration', async (registerMutation, { rejectWithValue }) => {
@@ -37,7 +37,7 @@ export const registration = createAsyncThunk<
 });
 
 export const login = createAsyncThunk<
-  User,
+  UserApi,
   LoginMutation,
   { rejectValue: GlobalError }
 >('users/login', async (loginMutation, { rejectWithValue }) => {

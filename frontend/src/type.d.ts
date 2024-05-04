@@ -10,7 +10,7 @@ export interface LoginMutation {
   password: string;
 }
 
-export interface User {
+export interface UserApi {
   _id: string;
   username: string;
   displayName: string;
@@ -19,7 +19,7 @@ export interface User {
 }
 
 export interface RegisterResponse {
-  user: User;
+  user: UserApi;
   massage: string;
 }
 
@@ -37,4 +37,27 @@ export interface ValidationError {
 
 export interface GlobalError {
   error: string;
+}
+
+export interface Category {
+  _id: string,
+  categoryName: string,
+}
+
+export interface ProductFrom  {
+  title: string,
+  price: string,
+  description: string,
+  image: File | null,
+}
+
+export interface Product extends ProductFrom {
+  category: string;
+}
+
+export interface ProductApi {
+  _id: string,
+  title: string,
+  price: string,
+  image: string | null,
 }
