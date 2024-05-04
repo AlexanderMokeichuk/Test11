@@ -84,13 +84,13 @@ productsRouter.delete('/:id', auth, async (req, res, next) => {
 
     const check = await Product.find({_id: id});
 
-    if (user._id !== check[0].user._id) {
-      return res.status(403).send({ error: "Access is denied!!" });
+    if (user._id.toString() == check[0].user.toString()) {
+      await Product.findOneAndDelete({_id: id});
+      return res.send({ message: 'Deleted!', id: id });
     }
 
-    await Product.findOneAndDelete({_id: id});
 
-    return res.send({ message: 'Deleted!', id: id });
+    return res.status(403).send({ error: "Access is denied!!" });
   } catch (e) {
     next();
   }
