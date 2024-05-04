@@ -24,6 +24,8 @@ const Register: React.FC = () => {
   const [state, setState] = useState<RegisterMutation>({
     username: '',
     password: '',
+    displayName: '',
+    phoneNumber: '',
   });
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +79,8 @@ const Register: React.FC = () => {
                 label="Username"
                 name="username"
                 autoComplete="new-username"
+                required={true}
+
                 value={state.username}
                 onChange={inputChangeHandler}
                 error={Boolean(getFieldError('username'))}
@@ -89,10 +93,43 @@ const Register: React.FC = () => {
                 label="Password"
                 type="password"
                 autoComplete="new-password"
+                required={true}
+
                 value={state.password}
                 onChange={inputChangeHandler}
                 error={Boolean(getFieldError('password'))}
                 helperText={getFieldError('password')}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                name="displayName"
+                label="Display name"
+                type="text"
+                autoComplete="new-displayName"
+                required={true}
+
+                value={state.displayName}
+                onChange={inputChangeHandler}
+                error={Boolean(getFieldError('displayName'))}
+                helperText={getFieldError('displayName')}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                name="phoneNumber"
+                label="Phone"
+                type="tel"
+                placeholder="+(996)"
+                autoComplete="new-phoneNumber"
+                required={true}
+
+                value={state.phoneNumber}
+                onChange={inputChangeHandler}
+                error={Boolean(getFieldError('phoneNumber'))}
+                helperText={getFieldError('phoneNumber')}
               />
             </Grid>
           </Grid>
