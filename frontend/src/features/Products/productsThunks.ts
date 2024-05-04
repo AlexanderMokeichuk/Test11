@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Product, ProductApi} from "../../type";
+import {FullProduct, Product, ProductApi} from "../../type";
 import {RootState} from "../../app/store";
 import axiosApi from "../../axiosApi";
 
@@ -55,4 +55,35 @@ export const fetchProductsById = createAsyncThunk<ProductApi[], string>(
       return [];
     }
   },
+);
+
+export const fetchFullProduct = createAsyncThunk<FullProduct | null, string>(
+  "products/fetchProduct",
+  async (id) => {
+    try {
+      const {data: response} = await axiosApi.get(`/products?product=${id}`);
+
+      return response;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
+);
+
+export const deleteProduct = createAsyncThunk<void, string, { state: RootState }>(
+  "products/deleteProduct",
+  async (id, {getState}) => {
+    const token = getState().users.user?.token;
+
+    try {
+      await axiosApi.delete(`/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 );

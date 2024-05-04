@@ -17,6 +17,7 @@ const Products: React.FC = () => {
   }, [dispatch]);
 
 
+
   return (
     <Grid container>
       <Grid item width={"20%"}>

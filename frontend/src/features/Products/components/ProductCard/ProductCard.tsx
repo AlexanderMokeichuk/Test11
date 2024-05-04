@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import noImage from "./../../../../../public/noimage.svg";
 import {API_URL} from "../../../../constants";
+import {Link} from "react-router-dom";
 
 interface Props {
  product: ProductApi,
@@ -20,29 +21,28 @@ const ProductCard: React.FC<Props> = ({product}) => {
   }
 
   return (
-    <Card sx={{ maxWidth: 300 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          sx={{
-            width: "100%",
-            height: 150,
-          }}
-          image={image}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Link to={`/show-product/${product._id}`} style={{textDecoration: "none"}}>
+      <Card sx={{ maxWidth: 300 , padding: 2}}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            height="200"
+            sx={{
+              width: "100%",
+              height: 150,
+            }}
+            image={image}
+            alt="green iguana"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {product.title}
+            </Typography>
+            <h2>Price: {product.price} som</h2>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Link>
   );
 };
 

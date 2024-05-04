@@ -4,6 +4,7 @@ import { ProductFront } from '../type';
 import Product from '../models/Product';
 import { imagesUpload } from '../multer';
 import mongoose from 'mongoose';
+import User from '../models/User';
 
 const productsRouter = express.Router();
 
@@ -32,8 +33,27 @@ productsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, ne
   }
 });
 
-productsRouter.get('/', async (_req, res, next) => {
+productsRouter.get('/', async (req, res, next) => {
+  const query = req.query.product as string;
+
   try {
+    if (query) {
+      if (!mongoose.Types.ObjectId.isValid(query)) {
+        return res.status(422).send({ error: 'Not found product!!' });
+      }
+      const product = await Product
+        .findOne({_id: query})
+        .populate(
+          "user",
+          "username phoneNumber")
+        .populate(
+          "category",
+          "categoryName"
+        );
+
+
+      return res.send(product);
+    }
     const products = await Product.find().select('title price image');
 
     return res.send(products);
@@ -41,13 +61,36 @@ productsRouter.get('/', async (_req, res, next) => {
     next();
   }
 });
-
 productsRouter.get('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(422).send({ error: 'Not found products!!' });
+    }
+
+
     const products = await Product.find({ category: id }).select('title price image');
 
     return res.send(products);
+  } catch (e) {
+    next();
+  }
+});
+
+productsRouter.delete('/:id', auth, async (req, res, next) => {
+  const id = req.params.id;
+  const user = (req as RequestWithUser).user!;
+  try {
+
+    const check = await Product.find({_id: id});
+
+    if (user._id !== check[0].user._id) {
+      return res.status(403).send({ error: "Access is denied!!" });
+    }
+
+    await Product.findOneAndDelete({_id: id});
+
+    return res.send({ message: 'Deleted!', id: id });
   } catch (e) {
     next();
   }

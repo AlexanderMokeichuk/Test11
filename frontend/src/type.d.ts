@@ -61,3 +61,17 @@ export interface ProductApi {
   price: number,
   image: string | null,
 }
+
+export interface FullProduct extends ProductApi {
+  description: string,
+  user: {
+    _id: string,
+    username: string,
+    phoneNumber: string,
+  },
+  category: {
+    _id: string,
+    categoryName: string,
+  }
+}
+
