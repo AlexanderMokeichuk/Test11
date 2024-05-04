@@ -3,7 +3,7 @@ import Category from '../models/Category';
 
 const categoriesRouter = express.Router();
 
-categoriesRouter.get('/', async (req, res, next) => {
+categoriesRouter.get('/', async (_req, res, next) => {
   try {
     const categories = await Category.find();
 
@@ -12,3 +12,5 @@ categoriesRouter.get('/', async (req, res, next) => {
     next();
   }
 });
+
+export default categoriesRouter;

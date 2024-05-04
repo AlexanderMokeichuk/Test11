@@ -1,4 +1,5 @@
-import { Model } from 'mongoose';
+import { Model, Schema } from 'mongoose';
+import Types = module
 
 export interface UserFront {
   username: string;
@@ -6,6 +7,18 @@ export interface UserFront {
   displayName: string;
   phoneNumber: string;
   token: string;
+}
+export interface UserApi extends UserFront {
+  _id: Types.ObjectId;
+}
+
+export interface ProductFront {
+  title: string,
+  price: string,
+  description: string,
+  image: string | null,
+  user: Types.ObjectId,
+  category: Types.ObjectId,
 }
 
 export interface UserMethods {
