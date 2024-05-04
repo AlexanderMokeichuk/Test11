@@ -4,7 +4,6 @@ import { ProductFront } from '../type';
 import Product from '../models/Product';
 import { imagesUpload } from '../multer';
 import mongoose from 'mongoose';
-import User from '../models/User';
 
 const productsRouter = express.Router();
 
